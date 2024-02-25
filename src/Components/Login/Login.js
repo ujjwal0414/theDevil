@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Footer } from "../../CommonComponents/Footer/Footer";
 import "../Login/login.css"
+import { MapRender } from "../Map/Map";
 const Login = () => {
     let [userData, setData] = useState({
         email: "",
@@ -20,7 +21,7 @@ const Login = () => {
     ]
     return (
         <>
-            <div className="min-h-[90vh] flex flex-col-reverse md:flex-row justify-center items-center pb-6">
+            <div className="  min-h-[90vh] flex flex-col-reverse md:flex-row  justify-center items-center pb-6">
                 <div className="md:w-[40vw] pt-4 md:pt-0 w-[90vw] min-h-[25vw] flex justify-center md:justify-start">
                     <div className="md:w-[60%]  w-[80vw] md:ml-4 relative">
                         <h2 className="text-[1.8rem] text-slate-700 font-[400] BlendText">Book your Ride</h2>
@@ -41,9 +42,9 @@ const Login = () => {
 
                     </div>
                 </div>
-                <div className="md:w-[40vw] w-[100vw] flex justify-center min-h-[25vw]">
-                  <img src="https://assets-global.website-files.com/5e832e12eb7ca02ee9064d42/64d4e4f4803795aef34e644d_maps_img-5.png" className="md:w-[40vw] w-[80vw]  md:h-[25vw]"/> 
-
+                <div className="md:w-[40vw]  w-[100vw] flex justify-center h-[45vh] md:min-h-[25vw]">
+                  {/* <img src="https://assets-global.website-files.com/5e832e12eb7ca02ee9064d42/64d4e4f4803795aef34e644d_maps_img-5.png" className="md:w-[40vw] w-[80vw]  md:h-[25vw]"/>  */}
+                <MapRender/>
                 </div>
             </div>
           

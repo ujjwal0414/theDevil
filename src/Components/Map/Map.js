@@ -7,7 +7,7 @@ const MapRender = () => {
   let [viewport,setPort]=useState({
     latitude:28.6448,
     longitude:77.216,
-    zoom:17
+    zoom:7
   })
   const Map = ReactMapboxGl({
     accessToken:
@@ -17,24 +17,19 @@ const MapRender = () => {
   
   return (
     <>
-      <div className='absolute top-0 -z-50'>
+      <div >
       
         <Map
           // center={[-0.481747846041145, 51.3233379650232]}
           style="mapbox://styles/mapbox/streets-v11"
-         
-         
-          containerStyle={{
-            height: '100vh',
-            width: '100vw'
-          }}
-        >
-        
-
-
-        <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-    <Feature className="bg-black" coordinates={[-0.481747846041145, 51.3233379650232]} />
-  </Layer>        </Map>
+         className='h-[90%] md:h-[100%] md:w-[40vw] w-[80vw] rounded-lg'
+         center={[ 78.9629, 20.5937]}
+          // containerStyle={{
+          //   height: '100%',
+          //   width: '40vw'
+          // }}
+          zoom={[6]}
+        >       </Map>
         
       </div>
     </>
