@@ -4,7 +4,9 @@ import { NotFound } from "./NotFound";
 import { Home } from "./Components/Home/Home";
 import { Login } from "./Components/Login/Login";
 import { PrivateRouter } from "./PrivateRoute/PrivateRoute";
+import { useEffect } from "react";
 function App() {
+ 
   return (
     <>
    
