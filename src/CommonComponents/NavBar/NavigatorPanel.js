@@ -11,7 +11,7 @@ const NavigationPanel=({show,setPanelShow})=>{
                  {
                     LinkNavigate.map((i,p)=>{
                         return(
-                            <Link onClick={()=>{setPanelShow(!show)}}  className={` ${location.pathname==i.pathName?"bg-black":"bg-slate-200 text-black"} p-3 text-center font-semibold rounded-xl text-[1rem]  w-[40vw]  text-white`}  to={i.pathName}>{i.name}</Link>
+                            <Link onClick={()=>{setPanelShow(!show)}}  className={` ${location.pathname==i.pathName?"bg-black text-white":"bg-slate-200 text-black"} p-3 text-center font-semibold rounded-xl text-[1rem]  w-[40vw]  `}  to={i.pathName}>{i.name}</Link>
 
                         )
                     })
