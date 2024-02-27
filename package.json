@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@maptiler/geocoding-control": "^1.2.1",
     "@maptiler/sdk": "^1.2.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -10,6 +11,7 @@
     "bingmaps-react": "^1.2.10",
     "icons": "^1.0.0",
     "mapbox-gl": "^3.1.2",
+    "maplibre-gl": "^4.0.2",
     "react": "^18.2.0",
     "react-bingmaps": "^3.6.1",
     "react-dom": "^18.2.0",
