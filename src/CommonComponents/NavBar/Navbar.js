@@ -27,7 +27,7 @@ const NavBar=()=>{
         <>
         <div className={`py-4 flex justify-center  transition-opacity duration-200 z-50 ${location.pathname=="/"?"opacity-60 hover:opacity-80":"opacity-100"}`}>
             <div className="md:w-[90vw] w-[90vw] bg-slate-300 flex px-3 py-4 justify-between items-center rounded-lg">
-                <span className="font-semibold text-[1.2rem]">u<span>Ride</span></span>
+                <span className="font-semibold text-[1.2rem]">u<span className="text-[#2b757e]">JEX</span></span>
                 <div className="md:min-w-[40%]  md:flex justify-evenly hidden md:visible">
                     {
                         LinkNavigate.map((item,pos)=>{
