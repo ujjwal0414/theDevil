@@ -54,7 +54,7 @@ const SearchPlace=({setPlacesMap,places})=>{
             }
             <button onClick={fetchData} className={`w-[95%]  ${load?"py-3":"py-2"} mt-2 rounded-md text-white bg-slate-800 font-semibold text-center flex justify-center`}>{load?<LuLoader2 className="transition-all  animate-spin font-semibold" />:"Search"}</button>
     
-            </div></>:<><span onClick={()=>{setSearch(!search)}} className="absolute cursor-pointer rounded-full p-3 border-2 border-slate-600 transition-all duration-150 bottom-12 left-2 bg-white"><IoSearchSharp/></span>
+            </div></>:<><span onClick={()=>{setSearch(!search)}} className="absolute cursor-pointer rounded-full p-3 border-2 border-slate-600 transition-all duration-150 bottom-8 left-2 bg-white"><IoSearchSharp/></span>
             </>
         }
         </>

@@ -42,9 +42,9 @@ const Login = () => {
 
                     </div>
                 </div>
-                <div className="md:w-[40vw] hidden md:block  w-[100vw] flex justify-center h-[45vh] md:min-h-[25vw]">
+                <div className="md:w-[40vw] hidden md:block  w-[100vw] sm:flex justify-center h-[45vh] md:min-h-[25vw]">
                   <img src="https://assets-global.website-files.com/5e832e12eb7ca02ee9064d42/64d4e4f4803795aef34e644d_maps_img-5.png" className="md:w-[40vw] w-[80vw]  md:h-[25vw]"/> 
-                {/* <MapRender/> */}
+                
                 </div>
             </div>
           

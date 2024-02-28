@@ -3,7 +3,31 @@ import * as maptilersdk from '@maptiler/sdk';
 import "@maptiler/sdk/dist/maptiler-sdk.css";
 import { GeocodingControl } from "@maptiler/geocoding-control/maptilersdk";
 import "@maptiler/geocoding-control/style.css";
+import { ChangeMapStyle } from './changeMapstyle';
 const MMap=({places})=>{
+  let [initStyle,setStyle]=useState(maptilersdk.MapStyle.STREETS)
+  let mapStyle=[{
+    val:"Hybrid",
+    styleMap:maptilersdk.MapStyle.HYBRID
+  },
+  {
+    val:"Street",
+    styleMap:maptilersdk.MapStyle.STREETS
+  },
+  {
+    val:"Satellite",
+    styleMap:maptilersdk.MapStyle.SATELLITE
+  },
+  {
+    val:"Open Street",
+    styleMap:maptilersdk.MapStyle.OPENSTREETMAP
+  },
+  {
+    val:"Winter",
+    styleMap:maptilersdk.MapStyle.WINTER
+  },
+
+]
   let mapMake=null;
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -13,9 +37,8 @@ const MMap=({places})=>{
   useEffect(() => {
     // stops map from intializing more than onc
     callMap()
-  }, [places]);
+  }, [places,initStyle]);
   let callMap=()=>{
-   
     if (false) {
       return
     }
@@ -25,7 +48,7 @@ const MMap=({places})=>{
       container: mapContainer.current,
       center:[tokyo.lng, tokyo.lat],      
       // center:places.length==0?[tokyo.lng, tokyo.lat]:places,
-      style: maptilersdk.MapStyle.STREETS,
+      style:initStyle,
       
       zoom: zoom,
       
@@ -62,7 +85,8 @@ mapMake.addControl(gc,"bottom-right")
  
     return(
         <>
-        <div className="map-wrap w-[100%] h-[100vh] absolute top-0 -z-50">
+        <ChangeMapStyle initial={initStyle} styl={setStyle} styles={mapStyle} />
+        <div className="map-wrap w-[100%] h-[95vh] md:h-[100vh] absolute top-0 -z-50">
       <div ref={mapContainer} className="map  w-[100%] h-[100%]" ></div>
     </div>
         </>
