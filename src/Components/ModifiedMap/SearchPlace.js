@@ -11,7 +11,7 @@ const SearchPlace=({setPlacesMap,places})=>{
     let [err,setErr]=useState("");
     let [search,setSearch]=useState(false);
     let fetchData=async()=>{
-        
+       
         if(placeName==="" || p2==="") {setErr("Complete the empty fields!!!") 
         return}
         setLoader(true);

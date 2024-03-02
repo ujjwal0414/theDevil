@@ -43,19 +43,23 @@ const MMap=({places})=>{
       return
     }
     else{
-      console.log(places.length);
+     
       mapMake =map.current = new maptilersdk.Map({
       container: mapContainer.current,
       center:[tokyo.lng, tokyo.lat],      
       // center:places.length==0?[tokyo.lng, tokyo.lat]:places,
       style:initStyle,
-      
+      navigationControl:false,
       zoom: zoom,
+      
       
     })
     }; 
   }
   useEffect(()=>{
+    let gc=new GeocodingControl()
+mapMake.addControl(gc,"bottom-right")
+    if(places==null) return
     if(places.length!==0){
       let p1=places[0][0];
     let p2=places[1][0]
@@ -79,9 +83,8 @@ const MMap=({places})=>{
   //   new maptilersdk.Marker({color: "#FF0000"})
   //  .setLngLat(places.length==0?[tokyo.lng, tokyo.lat]:places)
   //  .addTo(map.current)
-let gc=new GeocodingControl()
-mapMake.addControl(gc,"bottom-right")
-  },[places])
+
+  },[])
  
     return(
         <>
