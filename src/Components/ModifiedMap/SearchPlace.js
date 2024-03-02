@@ -64,12 +64,12 @@ const SearchPlace=({setPlacesMap,places})=>{
         {
             search ?<><div className="absolute rounded-md bottom-12 left-2 md:w-[24vw] w-[90vw] bg-white flex flex-col p-1 py-2 items-center">
            <span className="absolute right-[-25px] cursor-pointer"> <ImCross onClick={()=>{setSearch(!search)}} /></span>
-            <input value={placeName} onChange={(e)=>{setName(e.target.value)}} className="w-[95%] border-2 px-1 py-2 border-slate-500 rounded-md" type="text" placeholder="Enter Starting location"/>
+            <input value={placeName} onChange={(e)=>{setName(e.target.value);setErr1("")}} className="w-[95%] border-2 px-1 py-2 border-slate-500 rounded-md" type="text" placeholder="Enter Starting location"/>
             {
                err1 && <span className="text-[12px] w-[95%] font-semibold text-red-500">{err1}</span>
 
 }
-            <input value={p2} onChange={(e)=>{setp2(e.target.value)}} className="w-[95%] mt-1 border-2 px-1 py-2 border-slate-500 rounded-md" type="text" placeholder="Enter ending location"/>
+            <input value={p2} onChange={(e)=>{setp2(e.target.value);setErr2("")}} className="w-[95%] mt-1 border-2 px-1 py-2 border-slate-500 rounded-md" type="text" placeholder="Enter ending location"/>
 {
                err2 && <span className="text-[12px] w-[95%] font-semibold text-red-500">{err2}</span>
 
