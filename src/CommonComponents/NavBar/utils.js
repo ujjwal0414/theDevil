@@ -4,14 +4,14 @@ const LinkNavigate=[
         pathName:"/user"
     },
     
-    {
-        name:"Pricing",
-        pathName:"/pricing"
-    },
-    {
-        name:"Profile",
-        pathName:"/profile"
-    },
+    // {
+    //     name:"Pricing",
+    //     pathName:"/pricing"
+    // },
+    // {
+    //     name:"Profile",
+    //     pathName:"/profile"
+    // },
     {
         name:"Sign Up",
         pathName:"/signUp"
