@@ -2,7 +2,9 @@ import { useState } from "react"
 import { LuLoader2 } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { setToLocalStorage } from "../../CommonComponents/localStorageSet";
+
 let SignUp=()=>{
+    let url=process.env.REACT_APP_BACKEND_URL
     let navigate=useNavigate();
     let [err,setError]=useState("");
     let [loader,setLoader]=useState(false);
@@ -38,7 +40,7 @@ let SignUp=()=>{
             return
             
           },20000)
-        let response=await fetch(`http://localhost:2183/user/createUser`,{
+        let response=await fetch(`${url}/user/createUser`,{
             method:"post",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(userData),
@@ -88,7 +90,7 @@ let SignUp=()=>{
                             setLoader(false)
                             return
                           },10000)
-                        let response=await fetch(`http://localhost:2183/user/createUser`,{
+                        let response=await fetch(`${url}/user/createUser`,{
                             method:"post",
                             headers:{"Content-Type":"application/json"},
                             body:JSON.stringify(userData),
@@ -178,7 +180,7 @@ let SignUp=()=>{
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6rrNU8kpaxxYnMJZ8GxqSYzDhbZYfUsPdKA&usqp=CAU" alt="user" className="font-semibold aspect-square w-[45px]"/>
                                 <span className="font-semibold text-slate-600 ml-2">User</span>
                             </div>
-                            <div onClick={()=>{setUser("jobseeker")}} className={`w-[49%] ${userData.userType==="jobseeker"?"shadow-md shadow-slate-500":"hover:shadow-md hover:shadow-slate-500 " } cursor-pointer py-1   duration-150 border-2 rounded-md border-slate-300 flex justify-center items-center`}>
+                            <div  className={`w-[49%] ${userData.userType==="jobseeker"?"shadow-md shadow-slate-500":"hover:shadow-md hover:shadow-slate-500 " } cursor-pointer py-1   duration-150 border-2 rounded-md border-slate-300 flex justify-center items-center`}>
                                 <img src="https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Tata-Punch-EV-080120241636.jpg&w=350&h=251&q=90&c=1" alt="user" className="font-semibold h-[45px] w-[60px]"/>
                                 <span className="font-semibold text-slate-600 ml-2">Owner</span>
                             </div>

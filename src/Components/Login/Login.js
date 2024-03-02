@@ -8,6 +8,8 @@ import {  createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { setToLocalStorage } from "../../CommonComponents/localStorageSet";
 const Login = () => {
+    let url=process.env.REACT_APP_BACKEND_URL
+    
     let navigate=useNavigate();
     let [err,setError]=useState("");
     let [loader,setLoader]=useState(false);
@@ -62,7 +64,7 @@ const Login = () => {
                             setLoader(false)
                             return
                           },10000)
-                        let response=await fetch(`http://localhost:2183/user/userLogin`,{
+                        let response=await fetch(`${url}/user/userLogin`,{
                             method:"post",
                             headers:{"Content-Type":"application/json"},
                             body:JSON.stringify(userData),

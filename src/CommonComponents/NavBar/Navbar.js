@@ -6,11 +6,13 @@ import { NavigationPanel } from "./NavigatorPanel";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const NavBar=()=>{
+   
     let navigate=useNavigate()
+    let url=process.env.REACT_APP_BACKEND_URL
     let location=useLocation();
     let [userExs,setExs]=useState(false)
     let userData=async(id)=>{
-        let userResponse=await fetch(`http://localhost:2183/user/getUserDetails/${id}`);
+        let userResponse=await fetch(`${url}/user/getUserDetails/${id}`);
         userResponse=await userResponse.json();
         console.log(userResponse);
     }
