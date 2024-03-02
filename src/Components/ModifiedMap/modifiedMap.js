@@ -84,7 +84,7 @@ mapMake.addControl(gc,"bottom-right")
   //  .setLngLat(places.length==0?[tokyo.lng, tokyo.lat]:places)
   //  .addTo(map.current)
 
-  },[])
+  },[places])
  
     return(
         <>

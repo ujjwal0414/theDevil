@@ -9,6 +9,9 @@ const SearchPlace=({setPlacesMap,places})=>{
     let [p2,setp2]=useState("");
     let [load,setLoader]=useState(false);
     let [err,setErr]=useState("");
+    let [err1,setErr1]=useState("");
+    let [err2,setErr2]=useState("");
+
     let [search,setSearch]=useState(false);
     let fetchData=async()=>{
        
@@ -30,9 +33,24 @@ const SearchPlace=({setPlacesMap,places})=>{
             ]);
             coordinateArr=await Promise.all(coordinateArr.map(r=> r.json()));
             console.log(coordinateArr);
-            setLoader(false)
-            setErr("")
+        
+            if(coordinateArr.length==0){
+                setErr("No place found.Try again")
+            }
+            else if(coordinateArr[1].length==0 && coordinateArr[0].length==0){
+                setErr1(`Above place not found`)
+                setErr2(`Above place not found`)
+            }
+            else if(coordinateArr[0].length==0){
+                setErr1(`Above place not found`)
+                }
+            else if(coordinateArr[1].length==0){
+            setErr2(`Above place not found`)
+            }
+            
+            
         setPlacesMap(coordinateArr)
+        setLoader(false)
         // setName("")
         } catch (error) {
             setErr("An error occured")
@@ -47,7 +65,15 @@ const SearchPlace=({setPlacesMap,places})=>{
             search ?<><div className="absolute rounded-md bottom-12 left-2 md:w-[24vw] w-[90vw] bg-white flex flex-col p-1 py-2 items-center">
            <span className="absolute right-[-25px] cursor-pointer"> <ImCross onClick={()=>{setSearch(!search)}} /></span>
             <input value={placeName} onChange={(e)=>{setName(e.target.value)}} className="w-[95%] border-2 px-1 py-2 border-slate-500 rounded-md" type="text" placeholder="Enter Starting location"/>
+            {
+               err1 && <span className="text-[12px] w-[95%] font-semibold text-red-500">{err1}</span>
+
+}
             <input value={p2} onChange={(e)=>{setp2(e.target.value)}} className="w-[95%] mt-1 border-2 px-1 py-2 border-slate-500 rounded-md" type="text" placeholder="Enter ending location"/>
+{
+               err2 && <span className="text-[12px] w-[95%] font-semibold text-red-500">{err2}</span>
+
+}
             {
                 err &&         <span className="text-[0.8rem] mt-1 font-semibold text-left w-[95%]">{err}</span>
     
