@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { NavBar } from './CommonComponents/NavBar/Navbar';
+import { Footer } from './CommonComponents/Footer/Footer';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
@@ -13,7 +14,7 @@ root.render(
     <BrowserRouter > 
     <NavBar/>
     <App />
-    
+    <Footer/>
     </BrowserRouter>
    
   </React.StrictMode>
