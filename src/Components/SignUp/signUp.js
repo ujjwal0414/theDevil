@@ -145,7 +145,7 @@ let SignUp=()=>{
         }
     ]
     return <>
-    <div className="min-h-[80vh]  md:min-h-[90vh] flex  md:flex-row  justify-center md:items-center pb-6">
+    <div className="min-h-[90vh]  md:min-h-[90vh] flex  md:flex-row  justify-center md:items-center pb-6">
                 <div className="md:w-[40vw] pt-20 md:pt-0 w-[90vw] min-h-[25vw] flex justify-center md:justify-start">
                     <div className="md:w-[60%]  w-[85vw] md:ml-4 relative">
                         <h2 className="text-[1.8rem] text-slate-700 font-[400] BlendText">Book your Ride</h2>
