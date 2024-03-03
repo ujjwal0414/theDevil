@@ -3,7 +3,7 @@ import { Navigate,Outlet } from "react-router-dom";
 import {  createContext, useContext } from "react";
 import { UserContext } from "../userContext/UseContext";
 const PrivateRouter=()=>{
-    console.log(useContext(UserContext));
+    
     let [userData,setData]=useState(null);
     let getUser=()=>{
         let data=localStorage.getItem("id") 

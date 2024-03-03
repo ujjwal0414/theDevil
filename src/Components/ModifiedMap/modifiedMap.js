@@ -60,21 +60,12 @@ const MMap=({places})=>{
     let gc=new GeocodingControl()
 mapMake.addControl(gc,"bottom-right")
     if(places==null) return
-    if(places.length!==0){
-      let p1=places[0][0];
-    let p2=places[1][0]
-   
-    if(p1){
-      new maptilersdk.Marker({color: "#FF0000"})
-   .setLngLat([p1?.longitude,p1?.latitude])
-   .addTo(map.current)
-    }
-  if(p2){
     new maptilersdk.Marker({color: "#FF0000"})
-    .setLngLat([p2?.longitude,p2?.latitude])
+    .setLngLat(places.c1)
     .addTo(map.current)
-  }
-    }
+    new maptilersdk.Marker({color: "#FF0000"})
+    .setLngLat(places.c2)
+    .addTo(map.current)
   //   mapMake.flyTo({
   //     center:places.length==0?[tokyo.lng, tokyo.lat]:places,
   //     essential:true,

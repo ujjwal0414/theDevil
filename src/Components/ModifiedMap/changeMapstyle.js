@@ -9,9 +9,9 @@ const ChangeMapStyle=({styl,styles,initial})=>{
         <>
         {
             showLayer?
-            <div onClick={()=>{setLayer(!showLayer)}} className="absolute left-2 bg-white p-2 rounded-full border-2 border-slate-600 "><IoLayersSharp/></div>
+            <div onClick={()=>{setLayer(!showLayer)}} className="absolute left-2 bg-white p-2 cursor-pointer shadow-md shadow-slate-600 "><IoLayersSharp/></div>
            :
-        <div className="absolute left-2 bg-white py-2 md:w-[15vw] w-[60vw] rounded-lg border-slate-600 border-2 ">
+        <div className="absolute left-2 bg-white py-2 md:w-[15vw] w-[60vw]  shadow-md shadow-slate-600 ">
            {
             styles.map((i,p)=>{
                 return(
