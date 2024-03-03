@@ -6,6 +6,8 @@ import { MapRender } from "../Map/Map";
 import {  createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { setToLocalStorage } from "../../CommonComponents/localStorageSet";
+import { auth,googleAuthProvide } from "../../fireBase/fireBaseAuth";
+import {signInWithPopup,signOut} from "firebase/auth"
 const Login = () => {
     let url=process.env.REACT_APP_BACKEND_URL
     
@@ -37,7 +39,6 @@ const Login = () => {
       
     }
     const submitData=async()=>{
-        
         const abortController = new AbortController();
         const signal = abortController.signal;
         if(userData.email==="" || userData.password===""){
@@ -114,6 +115,52 @@ const Login = () => {
         }
         
     }
+    let loginViaGoogle=async()=>{
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+        try {
+            let cancelApi=setTimeout(()=>{
+                abortController.abort();
+                setError("Session timed out Try again")
+                
+            },15000)
+            let resp=await signInWithPopup(auth,googleAuthProvide)
+            let {_tokenResponse}=resp;
+            let {refreshToken,photoUrl,email}=_tokenResponse;
+            let checkUser=await fetch(`${url}/user/userLoginViaGoogle`,{
+                method:"post",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({
+                    email:email
+                }),
+                signal:signal
+            })
+            checkUser=await checkUser.json();
+            if(checkUser){
+                clearTimeout(cancelApi)
+              if(checkUser.status===400){
+                setError("It looks like you are not registered.Register now")
+                setTimeout(() => {
+                    navigate("/signUp")
+                }, 1500);
+              }
+              else if(checkUser.status===200){
+              
+                setToLocalStorage(checkUser.uid,false)
+                navigate("/user")
+              }
+              else{
+                setError("An unexprected error occured")
+              }
+            }
+            else{
+                setError("An error occured while loggin you in")
+            }
+          
+        } catch (error) {
+           setError("Unable to login, try again") 
+        }
+    }
     return (
         <>
             <div className="min-h-[90vh]   md:min-h-[90vh] flex  md:flex-row  justify-center md:items-center pb-6">
@@ -140,7 +187,7 @@ const Login = () => {
                                 loader?<LuLoader2 className="transition-all animate-spin"/>:<>Login</>
                             }
                         </button>
-                        <button className="text-center w-[100%] p-2 mt-2 font-semibold rounded-md border-2 border-black flex items-center justify-center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxxR_ZDiWVWyqaianGr_Y-jaaDfA9FGncZYayj0NaoLg&s" className="w-[20px] h-[20px] mr-2" />Continue using Google</button>
+                        <button onClick={loginViaGoogle} className="text-center w-[100%] p-2 mt-2 font-semibold rounded-md border-2 border-black flex items-center justify-center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxxR_ZDiWVWyqaianGr_Y-jaaDfA9FGncZYayj0NaoLg&s" className="w-[20px] h-[20px] mr-2" />Continue using Google</button>
 
                     </div>
                 </div>

@@ -3,6 +3,8 @@ import { LuLoader2 } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { setToLocalStorage } from "../../CommonComponents/localStorageSet";
 import { Footer } from "../../CommonComponents/Footer/Footer";
+import { auth,googleAuthProvide,app } from "../../fireBase/fireBaseAuth";
+import {signInWithPopup} from "firebase/auth"
 let SignUp=()=>{
     let url=process.env.REACT_APP_BACKEND_URL
     let navigate=useNavigate();
@@ -67,7 +69,7 @@ let SignUp=()=>{
         
         const abortController = new AbortController();
         const signal = abortController.signal;
-        if(userData.email==="" || userData.password==="" || userData.phoneNos==="" ){
+        if(userData.email==="" || userData.password==="" || userData.phone===null ){
             setError("Empty fields");
             return;
         }
@@ -132,6 +134,70 @@ let SignUp=()=>{
         }
         
     }
+    let SignInwithGoogle=async()=>{
+       if(userData.phone==null){
+        setError("Enter phone number")
+        return
+       }
+       if(userData.phone.length!==10){
+        setError("Incorrect phone length")
+        return
+       }
+       if(userData.userType===null){
+        setError("Choose profession")
+        return
+       }else{
+        const abortController = new AbortController();
+        const signal = abortController.signal;
+        try {
+            let cancelApi=setTimeout(()=>{
+                abortController.abort();
+                setError("Session timed out Try again")
+                
+            },15000)
+            let resp=await signInWithPopup(auth,googleAuthProvide)
+            let {_tokenResponse}=resp;
+            let {refreshToken,photoUrl,email}=_tokenResponse;
+            if(resp){
+             let setUserInDb=await fetch(`${url}/user/createUserViaGoogle`,{
+             method:"post",
+             headers:{"Content-Type":"application/json"},
+             body:JSON.stringify({
+                 isGoogleSigned:true,
+                 gid:refreshToken,
+                 email:email,
+                 userProfilePic:photoUrl,
+                 phone:userData.phone,
+                 userType:userData.userType
+             })
+            })
+            if(setUserInDb){
+                setUserInDb=await setUserInDb.json();
+                clearTimeout(cancelApi)
+                if(setUserInDb.status==200){
+                    setToLocalStorage(setUserInDb.data._id,false)
+                    navigate("/user")
+                    
+                }
+                else if(setUserInDb.status===201){
+                    setError("User already exists")
+                }
+            }
+           
+            }
+            else{
+             setError("Unable to signIn")
+            }
+            
+         } catch (error) {
+             setError("Can't sign up at the moment")
+            console.log(error); 
+         }
+       }
+
+
+
+    }
     let formData = [
         {
             type: "email",
@@ -180,7 +246,7 @@ let SignUp=()=>{
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6rrNU8kpaxxYnMJZ8GxqSYzDhbZYfUsPdKA&usqp=CAU" alt="user" className="font-semibold aspect-square w-[45px]"/>
                                 <span className="font-semibold text-slate-600 ml-2">User</span>
                             </div>
-                            <div  className={`w-[49%] ${userData.userType==="jobseeker"?"shadow-md shadow-slate-500":"hover:shadow-md hover:shadow-slate-500 " } cursor-pointer py-1   duration-150 border-2 rounded-md border-slate-300 flex justify-center items-center`}>
+                            <div   className={`w-[49%] ${userData.userType==="jobseeker"?"shadow-md shadow-slate-500":"hover:shadow-md hover:shadow-slate-500 " } cursor-pointer py-1   duration-150 border-2 rounded-md border-slate-300 flex justify-center items-center`}>
                                 <img src="https://cdni.autocarindia.com/utils/imageresizer.ashx?n=https://cms.haymarketindia.net/model/uploads/modelimages/Tata-Punch-EV-080120241636.jpg&w=350&h=251&q=90&c=1" alt="user" className="font-semibold h-[45px] w-[60px]"/>
                                 <span className="font-semibold text-slate-600 ml-2">Owner</span>
                             </div>
@@ -190,7 +256,7 @@ let SignUp=()=>{
                                 loader?<LuLoader2 className="transition-all animate-spin"/>:<>Sign Up</>
                             }
                         </button>
-                        <button className="text-center w-[100%]  p-2 mt-2 font-semibold rounded-md border-2 border-black flex items-center justify-center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxxR_ZDiWVWyqaianGr_Y-jaaDfA9FGncZYayj0NaoLg&s" className="w-[20px] h-[20px] mr-2" />Continue using Google</button>
+                        <button onClick={SignInwithGoogle} className="text-center w-[100%]  p-2 mt-2 font-semibold rounded-md border-2 border-black flex items-center justify-center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxxR_ZDiWVWyqaianGr_Y-jaaDfA9FGncZYayj0NaoLg&s" className="w-[20px] h-[20px] mr-2" />Continue using Google</button>
 
                     </div>
                 </div>
