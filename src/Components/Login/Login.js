@@ -1,8 +1,7 @@
 import { useState } from "react"
-import { Footer } from "../../CommonComponents/Footer/Footer";
 import "../Login/login.css"
 import { LuLoader2 } from "react-icons/lu";
-
+import { Footer } from "../../CommonComponents/Footer/Footer";
 import { MapRender } from "../Map/Map";
 import {  createContext, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -150,7 +149,7 @@ const Login = () => {
                 
                 </div>
             </div>
-          
+          <Footer/>
         </>
     )
 }

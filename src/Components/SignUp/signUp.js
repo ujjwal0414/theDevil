@@ -2,7 +2,7 @@ import { useState } from "react"
 import { LuLoader2 } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 import { setToLocalStorage } from "../../CommonComponents/localStorageSet";
-
+import { Footer } from "../../CommonComponents/Footer/Footer";
 let SignUp=()=>{
     let url=process.env.REACT_APP_BACKEND_URL
     let navigate=useNavigate();
@@ -199,7 +199,7 @@ let SignUp=()=>{
                 
                 </div>
             </div>
-    
+    <Footer/>
     </>
 }
 export {SignUp}
