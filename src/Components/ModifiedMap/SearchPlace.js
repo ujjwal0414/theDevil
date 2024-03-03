@@ -99,12 +99,46 @@ const SearchPlace = ({ setPlacesMap, places }) => {
             setLoader(false)
         }
     }
-    let searchCoordinates=()=>{
+    let searchCoordinates=async()=>{
         if(placeName==="" && p2===""){
             setErr("Complete the empty fields!!!")
         }
         else{
-            setPlacesMap(coord)
+            const abortController = new AbortController();
+        const signal = abortController.signal;
+
+            try {
+                let cancelapiRequest=setTimeout(()=>{
+                    abortController.abort()
+                    setErr("Oops ! an error occured")
+                },30000)
+               
+                let updateUserSearch=await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/insertSearch/${localStorage.getItem("id")}`,{
+                    method:"put",
+                    body:JSON.stringify(coord),
+                    headers: { 'Content-Type': 'application/json' },
+                    signal:signal
+                })
+                updateUserSearch=await updateUserSearch.json()
+                if(updateUserSearch){
+                    clearTimeout(cancelapiRequest)
+                    if(updateUserSearch.status===200){
+                        setPlacesMap(coord)
+                        setSearch(!search)
+                    }
+                    else if(updateUserSearch.status==201){
+                        setErr("You have reached limiting value of search, try upgrading to premium")
+                    }
+                    else if(updateUserSearch.status===400){
+                        setErr("An unexpected error occured")
+                    }
+
+                }
+            } catch (error) {
+                console.log(error);
+                setErr("An error occured.")
+            }
+            
         }
     }
     // useEffect(() => {
@@ -189,7 +223,7 @@ const SearchPlace = ({ setPlacesMap, places }) => {
                             err && <span className="text-[0.8rem] mt-1 font-semibold text-left w-[95%]">{err}</span>
 
                         }
-                        <button onClick={()=>{searchCoordinates();setSearch(!search)}} className={`w-[95%]  ${load ? "py-3" : "py-2"} mt-2 rounded-md text-white bg-slate-800 font-semibold text-center flex justify-center`}>{load ? <LuLoader2 className="transition-all  animate-spin font-semibold" /> : "Search"}</button>
+                        <button onClick={()=>{searchCoordinates()}} className={`w-[95%]  ${load ? "py-3" : "py-2"} mt-2 rounded-md text-white bg-slate-800 font-semibold text-center flex justify-center`}>{load ? <LuLoader2 className="transition-all  animate-spin font-semibold" /> : "Search"}</button>
 
                     </div></> : <><span onClick={() => { setSearch(!search) }} className="absolute cursor-pointer rounded-full p-3 border-2 border-slate-600 transition-all duration-150 bottom-8 left-2 bg-white"><IoSearchSharp /></span>
                 </>

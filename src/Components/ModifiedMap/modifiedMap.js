@@ -49,7 +49,7 @@ const MMap=({places})=>{
       center:[tokyo.lng, tokyo.lat],      
       // center:places.length==0?[tokyo.lng, tokyo.lat]:places,
       style:initStyle,
-      navigationControl:false,
+      navigationControl:true,
       zoom: zoom,
       
       
