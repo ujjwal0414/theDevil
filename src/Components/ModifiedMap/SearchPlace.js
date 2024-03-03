@@ -112,7 +112,7 @@ const SearchPlace = ({ setPlacesMap, places }) => {
                     abortController.abort()
                     setErr("Oops ! an error occured")
                 },30000)
-               
+               console.log(localStorage.getItem("id"));
                 let updateUserSearch=await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/insertSearch/${localStorage.getItem("id")}`,{
                     method:"put",
                     body:JSON.stringify(coord),
@@ -123,6 +123,7 @@ const SearchPlace = ({ setPlacesMap, places }) => {
                 if(updateUserSearch){
                     clearTimeout(cancelapiRequest)
                     if(updateUserSearch.status===200){
+                        console.log(updateUserSearch);
                         setPlacesMap(coord)
                         setSearch(!search)
                     }
