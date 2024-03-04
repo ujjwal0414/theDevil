@@ -10,6 +10,7 @@ let SignUp=()=>{
     let navigate=useNavigate();
     let [err,setError]=useState("");
     let [loader,setLoader]=useState(false);
+    let [gLoader,setGLoader]=useState(false);
     let [userData, setData] = useState({
         email: "",
         password: "",
@@ -147,24 +148,27 @@ let SignUp=()=>{
         setError("Choose profession")
         return
        }else{
+        setGLoader(true)
         const abortController = new AbortController();
         const signal = abortController.signal;
         try {
             let cancelApi=setTimeout(()=>{
+                setGLoader(false)
                 abortController.abort();
                 setError("Session timed out Try again")
                 
             },15000)
             let resp=await signInWithPopup(auth,googleAuthProvide)
             let {_tokenResponse}=resp;
-            let {refreshToken,photoUrl,email}=_tokenResponse;
+           
+            let {photoUrl,email,localId}=_tokenResponse;
             if(resp){
              let setUserInDb=await fetch(`${url}/user/createUserViaGoogle`,{
              method:"post",
              headers:{"Content-Type":"application/json"},
              body:JSON.stringify({
                  isGoogleSigned:true,
-                 gid:refreshToken,
+                 gid:localId,
                  email:email,
                  userProfilePic:photoUrl,
                  phone:userData.phone,
@@ -175,21 +179,28 @@ let SignUp=()=>{
                 setUserInDb=await setUserInDb.json();
                 clearTimeout(cancelApi)
                 if(setUserInDb.status==200){
+                    setGLoader(false)
                     setToLocalStorage(setUserInDb.data._id,false)
                     navigate("/user")
                     
                 }
                 else if(setUserInDb.status===201){
+                    setGLoader(false)
                     setError("User already exists")
+                    setTimeout(()=>{
+                         navigate("/login")
+                    },2500)
                 }
             }
            
             }
             else{
+                setGLoader(false)
              setError("Unable to signIn")
             }
             
          } catch (error) {
+            setGLoader(false)
              setError("Can't sign up at the moment")
             console.log(error); 
          }
@@ -256,7 +267,15 @@ let SignUp=()=>{
                                 loader?<LuLoader2 className="transition-all animate-spin"/>:<>Sign Up</>
                             }
                         </button>
-                        <button onClick={SignInwithGoogle} className="text-center w-[100%]  p-2 mt-2 font-semibold rounded-md border-2 border-black flex items-center justify-center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxxR_ZDiWVWyqaianGr_Y-jaaDfA9FGncZYayj0NaoLg&s" className="w-[20px] h-[20px] mr-2" />Continue using Google</button>
+                        <button onClick={SignInwithGoogle} className="text-center w-[100%]  md:h-[2.8vw] h-[10vw]  p-2 mt-2 font-semibold rounded-md border-2 border-black flex items-center justify-center">
+                            {
+                                gLoader?<>
+                                <LuLoader2 className="animate-spin"/>
+                                </>:<>
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxxR_ZDiWVWyqaianGr_Y-jaaDfA9FGncZYayj0NaoLg&s" className="w-[20px] h-[20px] mr-2" />Continue using Google
+</>
+                            }
+                            </button>
 
                     </div>
                 </div>

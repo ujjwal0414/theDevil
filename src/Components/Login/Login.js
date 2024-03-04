@@ -14,6 +14,7 @@ const Login = () => {
     let navigate=useNavigate();
     let [err,setError]=useState("");
     let [loader,setLoader]=useState(false);
+    let [gLoader,setGLoader]=useState(false);
     let [userData, setData] = useState({
         email: "",
         password: ""
@@ -116,6 +117,7 @@ const Login = () => {
         
     }
     let loginViaGoogle=async()=>{
+        setGLoader(true)
         const abortController = new AbortController();
         const signal = abortController.signal;
         try {
@@ -126,12 +128,14 @@ const Login = () => {
             },15000)
             let resp=await signInWithPopup(auth,googleAuthProvide)
             let {_tokenResponse}=resp;
-            let {refreshToken,photoUrl,email}=_tokenResponse;
+           
+            let {localId,photoUrl,email}=_tokenResponse;
             let checkUser=await fetch(`${url}/user/userLoginViaGoogle`,{
                 method:"post",
                 headers:{"Content-Type":"application/json"},
                 body:JSON.stringify({
-                    email:email
+                    email:email,
+                    gid:localId
                 }),
                 signal:signal
             })
@@ -141,23 +145,28 @@ const Login = () => {
               if(checkUser.status===400){
                 setError("It looks like you are not registered.Register now")
                 setTimeout(() => {
+                    setGLoader(false)
                     navigate("/signUp")
                 }, 1500);
               }
               else if(checkUser.status===200){
-              
+                setGLoader(false)
                 setToLocalStorage(checkUser.uid,false)
+                
                 navigate("/user")
               }
               else{
+                setGLoader(false)
                 setError("An unexprected error occured")
               }
             }
             else{
+                setGLoader(false)
                 setError("An error occured while loggin you in")
             }
           
         } catch (error) {
+            setGLoader(false)
            setError("Unable to login, try again") 
         }
     }
@@ -187,7 +196,15 @@ const Login = () => {
                                 loader?<LuLoader2 className="transition-all animate-spin"/>:<>Login</>
                             }
                         </button>
-                        <button onClick={loginViaGoogle} className="text-center w-[100%] p-2 mt-2 font-semibold rounded-md border-2 border-black flex items-center justify-center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxxR_ZDiWVWyqaianGr_Y-jaaDfA9FGncZYayj0NaoLg&s" className="w-[20px] h-[20px] mr-2" />Continue using Google</button>
+                        <button onClick={loginViaGoogle} className="text-center  flex justify-center items-center md:h-[2.8vw] h-[10vw] w-[100%] p-2 mt-2 font-semibold rounded-md border-2 border-black ">
+                           {
+                            gLoader?<>
+                            <LuLoader2 className="animate-spin"/>
+                            </>:<>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxxR_ZDiWVWyqaianGr_Y-jaaDfA9FGncZYayj0NaoLg&s" className="w-[20px] h-[20px] mr-2" />Continue using Google
+</>
+                           }
+                            </button>
 
                     </div>
                 </div>
