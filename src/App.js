@@ -9,6 +9,8 @@ import { SignUp } from "./Components/SignUp/signUp";
 import { UserComp } from "./RoutingCompoents/user/user";
 import { useNavigate } from "react-router-dom"
 import { UserContext } from "./userContext/UseContext";
+import { HelpDesk } from "./Components/HelpDesk/helpDesk";
+import { NavigationPage } from "./Components/NavigationPage/NavigationPage";
 function App() {
   let [user,setUser]=useState("fsd")
   let navigate=useNavigate()
@@ -23,10 +25,13 @@ function App() {
     
       <Route element={<PrivateRouter/>}>
       <Route path="/user/*" element={<UserComp/>}/>
+      
       </Route>
       <Route path="*" element={<NotFound/>}/>
       <Route path="/signUp" element={<SignUp/>}/>
       <Route path="/login" element={<Login/>}/>
+      <Route path="/helpDesk" element={<HelpDesk/>}/>
+      
     </Routes>
     </UserContext.Provider>
      </>

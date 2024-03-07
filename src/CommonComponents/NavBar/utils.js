@@ -3,11 +3,7 @@ const LinkNavigate=[
         name:"Home",
         pathName:"/user"
     },
-    
-    // {
-    //     name:"Pricing",
-    //     pathName:"/pricing"
-    // },
+ 
     // {
     //     name:"Profile",
     //     pathName:"/profile"

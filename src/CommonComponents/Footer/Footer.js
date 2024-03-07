@@ -36,6 +36,11 @@ const Footer=()=>{
               <div className="font-semibold">ujwalgupt@gmail.com</div>
             </div>
             </div>
+            <div className="pt-4">
+            <div className=" md:m-0 ml-4 mt-4  w-[90%] md:text-center  ">
+                <Link to="/helpDesk" className="p-1 border-2 border-white px-3 rounded-md">Need Help?</Link>
+            </div>
+            </div>
             <div className="Copyright"></div>
         </div>
         </>

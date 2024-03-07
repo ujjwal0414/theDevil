@@ -56,6 +56,7 @@ const MMap=({places})=>{
     })
     }; 
   }
+
   useEffect(()=>{
     let gc=new GeocodingControl()
 mapMake.addControl(gc,"bottom-right")
@@ -66,14 +67,7 @@ mapMake.addControl(gc,"bottom-right")
     new maptilersdk.Marker({color: "#FF0000"})
     .setLngLat(places.c2)
     .addTo(map.current)
-  //   mapMake.flyTo({
-  //     center:places.length==0?[tokyo.lng, tokyo.lat]:places,
-  //     essential:true,
-  //     zoom:14
-  //   })
-  //   new maptilersdk.Marker({color: "#FF0000"})
-  //  .setLngLat(places.length==0?[tokyo.lng, tokyo.lat]:places)
-  //  .addTo(map.current)
+    console.log(places);
 
   },[places])
  
