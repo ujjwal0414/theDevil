@@ -174,7 +174,7 @@ const NavigationPage = () => {
                                 return(
                         <div key={p} className="w-[100%] mb-1 rounded-lg flex items-center px-4 py-6 border-slate-500 border-2">
                             <span className="font-semibold">{p+1} .</span>
-                            <MdDirectionsWalk className="scale-150 ml-3"/>
+                           
                             <p className="ml-3">{i.maneuver.instruction}</p>
                         </div>
                                 )

@@ -160,7 +160,7 @@ const SearchPlace = ({ setPlacesMap, places }) => {
                 }
             } catch (error) {
                 console.log(error);
-                setsrchLoad
+                setsrchLoad(false);
                 setErr("An error occured.")
             }
 
