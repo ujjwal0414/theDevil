@@ -34,9 +34,8 @@ const SearchPlace = ({ setPlacesMap, places }) => {
                         abortController.abort()
                         setErr("Oops ! an error occured")
                     }, 30000)
-                    let updateUserSearch = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/insertSearch/${localStorage.getItem("id")}`, {
+                    let updateUserSearch = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/incrementSearch/${localStorage.getItem("id")}`, {
                         method: "put",
-                        body: JSON.stringify(coord),
                         headers: { 'Content-Type': 'application/json' },
                         signal: signal
                     })
@@ -80,13 +79,13 @@ const SearchPlace = ({ setPlacesMap, places }) => {
                         setErr("Oops ! an error occured")
                     }, 30000)
 
-                    let updateUserSearch = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/insertSearch/${localStorage.getItem("id")}`, {
+                    let updateUserSearch = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/incrementSearch/${localStorage.getItem("id")}`, {
                         method: "put",
-                        body: JSON.stringify(coord),
                         headers: { 'Content-Type': 'application/json' },
                         signal: signal
                     })
                     updateUserSearch = await updateUserSearch.json()
+                    console.log(updateUserSearch);
                     if (updateUserSearch) {
                         clearTimeout(cancelapiRequest)
                         if (updateUserSearch.status === 200) {
@@ -161,7 +160,7 @@ const SearchPlace = ({ setPlacesMap, places }) => {
                 }
             } catch (error) {
                 console.log(error);
-                setsrchLoad(false)
+                setsrchLoad
                 setErr("An error occured.")
             }
 
@@ -250,7 +249,7 @@ const SearchPlace = ({ setPlacesMap, places }) => {
                             err && <span className="text-[0.8rem] mt-1 font-semibold text-left w-[95%]">{err}</span>
 
                         }
-                        <button onClick={() => { searchCoordinates() }} className={`w-[95%]  ${load ? "py-3" : "py-2"} mt-2 rounded-md text-white bg-slate-800 font-semibold text-center flex justify-center`}>{srchLoad ? <LuLoader2 className="transition-all  animate-spin font-semibold" /> : "Searchghf"}</button>
+                        <button onClick={() => { searchCoordinates() }} className={`w-[95%]  md:h-[2.8vw] h-[10vw]  p-2 mt-2  rounded-md text-white bg-slate-800 font-semibold text-center flex justify-center items-center`}>{srchLoad ? <LuLoader2 className="transition-all  animate-spin font-semibold" /> : "Search"}</button>
 
                     </div></> : <>
                     {
