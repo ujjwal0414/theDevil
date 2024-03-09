@@ -8,9 +8,12 @@ import { secondsToTime } from "./time";
 const NavigationPage = () => {
     let location = useLocation()
     let {state}=location
-    
+    // let state={
+    //     c1:[12,32],
+    //     c2:[12,32]
+    // }
     let [numberofRoutes,setRoutes]=useState(0)
-    let [response,setResponse]=useState(null);
+    let [response,setResponse]=useState(resp);
     let [err,setErr]=useState("")
     let [routePointer,setPointer]=useState(0);
     let [mode,setMode]=useState({
@@ -132,7 +135,7 @@ const NavigationPage = () => {
                     <span className="bg-red-200 text-center border-2 w-[90%] rounded-lg text-red-700 border-red-600 px-3 py-3">Map preview currently unavailable</span>
                 </div>
                 <div className="w-[90%]">
-                <div className="routes p-1 rounded-md font-semibold bg-slate-300 w-[100%] flex justify-evenly">
+                <div className="routes p-1 rounded-md font-semibold  w-[100%] flex justify-evenly">
                     {
                       response?.map((i,p)=>{
                         return(

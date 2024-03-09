@@ -21,3 +21,9 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.routes{
+  border-radius: 5px;
+background: #d1d1d1;
+box-shadow: inset 19px 19px 42px #c9c6c6,
+            inset -19px -19px 42px #fdfdfd;
+}

@@ -124,6 +124,7 @@ const SearchPlace = ({ setPlacesMap, places }) => {
         console.log("search");
         if (placeName === "" && p2 === "") {
             setErr("Complete the empty fields!!!")
+            return
         }
         else {
             setsrchLoad(true)

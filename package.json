@@ -2,6 +2,7 @@
   "name": "thedevil",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@maptiler/geocoding-control": "^1.2.1",
     "@maptiler/sdk": "^1.2.1",
