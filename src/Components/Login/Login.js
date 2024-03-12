@@ -64,7 +64,7 @@ const Login = () => {
                             setError("Try again")
                             setLoader(false)
                             return
-                          },10000)
+                          },30000)
                         let response=await fetch(`${url}/user/userLogin`,{
                             method:"post",
                             headers:{"Content-Type":"application/json"},
@@ -79,9 +79,7 @@ const Login = () => {
                             if(response.status===400){
                                 setError("Incorrect email or password")
                             }
-                            else if(false){
-                                setError("Account already exists")
-                            }
+                            
                             else if(response.status===403){
                                 setError("An unexpected error occured")
                             }
@@ -125,10 +123,9 @@ const Login = () => {
                 abortController.abort();
                 setError("Session timed out Try again")
                 
-            },15000)
+            },30000)
             let resp=await signInWithPopup(auth,googleAuthProvide)
             let {_tokenResponse}=resp;
-           
             let {localId,photoUrl,email}=_tokenResponse;
             let checkUser=await fetch(`${url}/user/userLoginViaGoogle`,{
                 method:"post",
@@ -140,6 +137,7 @@ const Login = () => {
                 signal:signal
             })
             checkUser=await checkUser.json();
+            
             if(checkUser){
                 clearTimeout(cancelApi)
               if(checkUser.status===400){
@@ -166,6 +164,7 @@ const Login = () => {
             }
           
         } catch (error) {
+            console.log(error);
             setGLoader(false)
            setError("Unable to login, try again") 
         }
