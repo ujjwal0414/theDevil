@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-let Profile = () => {
+let Profile = ({showP,setP}) => {
     let [err,setErr]=useState("");
     let [resp,setResp]=useState(null);
     let getProfile=async()=>{
@@ -39,7 +39,7 @@ let Profile = () => {
         <>
             {
                 resp!==null?<>
-                <div className="absolute w-[100%] h-[100%] bg-gray-400 opacity-40 z-50">
+                <div onClick={()=>{setP(!showP)}} className="absolute w-[100%] h-[100%] bg-gray-400 opacity-40 z-50">
             </div>
             <div className="md:w-[20vw] flex flex-col rounded-lg items-center right-6 top-10 absolute md:h-[90%] w-[90vw] h-[90vh] pb-2 z-50 bg-[#e9ecef]">
                 <div className="w-[95%] flex justify-center bg-[#f8f9fa] py-3 mt-4 rounded-md">
@@ -60,6 +60,8 @@ let Profile = () => {
                 <span className="w-[95%] font-[500] text-[#495057] text-[13px] mt-2">Searched Routes</span>
                 <div className=" w-[95%]  rounded-md bg-[#f8f9fa] max-h-[25%] overflow-y-auto py-2 pl-2">
                     {
+                        resp?.routes.length!==0?<>
+                        {
                         resp?.routes.map((item,pos)=>{
                             return(
                                 <div key={pos} className="mt-2 mb-1"><span>{pos+1}</span><span className="p-1 rounded-lg bg-[#e9ecef] px-2 ml-3">{item.route[0]}</span><span className="ml-2">-</span><span className="p-1 px-2 bg-[#e9ecef] rounded-lg ml-2">{item?.route[1]}</span></div>
@@ -67,6 +69,12 @@ let Profile = () => {
                             )
                         })
                     }
+                        </>:<>
+                        <div  className="mt-2 mb-1 text-center"><span className="p-1 rounded-lg bg-[#e9ecef] px-2 ml-3 font-semibold">No previous results found</span></div>
+
+                        </>
+                    }
+                    
                   
                 </div>
                 <span className="w-[95%] font-[500] text-[#495057] text-[13px] mt-2">Subscription</span>

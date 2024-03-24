@@ -256,7 +256,7 @@ const SearchPlace = ({ setPlacesMap, places }) => {
 
                     </div></> : <>
                     {
-                        coord.c1.length !== 0 ? <>
+                        coord.c1.length !== 0 && coord.c2.length!==0 ? <>
                             <span className="absolute cursor-pointer p-3 flex md:flex-row items-start md:items-center flex-col bottom-8 left-2 ">
                                 <span onClick={() => { setSearch(!search) }} className=" cursor-pointer rounded-full md:mb-0 mb-2 md:mr-3 p-3 border-2 border-slate-600 transition-all duration-150  bg-white"><IoSearchSharp /></span>
                                 <Link className="bg-black text-white font-semibold px-4 py-2   rounded-[25px] " state={coord} to="/user/navigation">Get routes</Link>

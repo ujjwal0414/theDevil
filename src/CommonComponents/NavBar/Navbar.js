@@ -65,7 +65,7 @@ const NavBar = () => {
 {
     showProfile && <>
   
-<Profile/>
+<Profile showP={showProfile} setP={setProfile} />
     
     </>
     
