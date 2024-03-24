@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react"
+import { LuLoader2 } from "react-icons/lu";
 
 let Profile = ({showP,setP}) => {
     let [err,setErr]=useState("");
     let [resp,setResp]=useState(null);
+    let [loader,setLoader]=useState(false);
+    let [apiNos,setNos]=useState(25);
     let getProfile=async()=>{
         const abortController = new AbortController();
         const signal = abortController.signal;
+       
+        
         try {
             let cancelApi= setTimeout(()=>{
                 abortController.abort()
@@ -14,12 +19,14 @@ let Profile = ({showP,setP}) => {
                 return
               },30000)
           if(localStorage.getItem("id")!==undefined||localStorage.getItem("id")!==null){
-            let userProfile=await fetch(`https://uridebackend.onrender.com/user/getUserDetails/${localStorage.getItem("id")}`,{signal:signal})
+            let userProfile=await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/getUserDetails/${localStorage.getItem("id")}`,{signal:signal})
             userProfile=await userProfile.json();
             if(userProfile){
                 clearTimeout(cancelApi)
-              
+              console.log(userProfile);
                 setResp(userProfile)
+                setNos(userProfile.data.userSubscription)
+               
             }
             else{
                 setErr("Can't fetch details")
@@ -35,6 +42,25 @@ let Profile = ({showP,setP}) => {
     useEffect(()=>{
     getProfile()
     },[])
+    let updateSubs=async(apiNos)=>{
+        setLoader(true)
+        setNos(apiNos)
+      try {
+        let updResp=await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/userSubscription/${localStorage.getItem("id")}`,{
+            method:"put",
+            body:JSON.stringify({
+                apiNos:apiNos
+            }),
+            headers:{"Content-Type":"application/json"}
+        })
+        updResp=await updResp.json();
+        console.log(updResp);
+        setLoader(false)  
+    } catch (error) {
+        setErr("Unable to update subscription")
+        setLoader(false)
+      }
+    }
     return (
         <>
             {
@@ -79,20 +105,37 @@ let Profile = ({showP,setP}) => {
                 </div>
                 <span className="w-[95%] font-[500] text-[#495057] text-[13px] mt-2">Subscription</span>
                 <div className=" w-[95%] font-semibold text-left flex flex-wrap  rounded-md bg-[#f8f9fa] py-2 pl-2">
-                   <button className="w-[49%] border border-[#adb5bd] px-2 py-2 items-center rounded-md  flex flex-col">
+                   <button disabled={true} className={`w-[49%] md:h-[10vh]  ${apiNos==25?"border-[#adb5bd] border":""} px-2 py-2 items-center rounded-md  flex flex-col`}>
                     <span>Normal</span>
                     <span>25 api/user</span>
                    </button>
-                   <button className="w-[49%] px-2 py-2  items-center rounded-md  flex flex-col">
+                   <button disabled={apiNos>=40?true:false} onClick={()=>{updateSubs(40)}} className={`w-[49%] md:h-[10vh] ${apiNos==40?"border-[#adb5bd] border":""} px-2 py-2 justify-center  items-center rounded-md  flex flex-col`}>
+                   
+                   {
+                    loader && apiNos==40?<>
+                     <LuLoader2 className="animate-spin"/>
+                    </>:<>
                     <span>Pro</span>
                     <span>40 api/user</span>
+                    </>
+                   }
                    </button>
-                   <button className="w-[49%] px-2 py-2 items-center rounded-md  flex flex-col">
+                   <button disabled={apiNos>=100?true:false} onClick={()=>{updateSubs(100)}} className={`w-[49%] ${apiNos==100?"border-[#adb5bd] border":""} md:h-[10vh] px-2 py-2 items-center rounded-md justify-center  flex flex-col`}>
+                   {
+                    loader && apiNos==100?<>
+                     <LuLoader2 className="animate-spin"/>
+                    </>:<>
                     <span>Exc</span>
                     <span>100 api/user</span>
+                    </>
+                   }
+                   
                    </button>
                 </div>
-                <span className="w-[95%] mt-5 font-semibold rounded-md text-[14px] bg-[#f8f9fa] py-2 text-[#495057] pl-2">Unable to update subscription</span>
+                {
+                    err && <span className="w-[95%] mt-5 font-semibold rounded-md text-[14px] bg-[#f8f9fa] py-2 text-[#495057] pl-2">Unable to update subscription</span>
+
+                }
             </div>
                 
                 </>:<><span className="mt-4 w-[95%] py-2 font-semibold rounded-md">
