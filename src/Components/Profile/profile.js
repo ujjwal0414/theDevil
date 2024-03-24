@@ -92,9 +92,12 @@ let Profile = ({showP,setP}) => {
                     <span>100 api/user</span>
                    </button>
                 </div>
+                <span className="w-[95%] mt-5 font-semibold rounded-md text-[14px] bg-[#f8f9fa] py-2 text-[#495057] pl-2">Unable to update subscription</span>
             </div>
                 
-                </>:<>{err}</>
+                </>:<><span className="mt-4 w-[95%] py-2 font-semibold rounded-md">
+                {err}
+                    </span></>
             }
         </>
     )
