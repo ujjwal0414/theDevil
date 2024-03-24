@@ -12,7 +12,7 @@ const NavBar = () => {
     let url = process.env.REACT_APP_BACKEND_URL
     let location = useLocation();
     let [userExs, setExs] = useState(false)
-    let [showProfile,setProfile]=useState(false);
+    let [showProfile, setProfile] = useState(false);
     let userData = async (id) => {
         let userResponse = await fetch(`${url}/user/getUserDetails/${id}`);
         userResponse = await userResponse.json();
@@ -49,10 +49,8 @@ const NavBar = () => {
         };
     }, [showNavigationPanel])
     useEffect(() => {
-      
+
         if (showProfile) {
-
-
             // Add event listener when the component mounts
             document.body.style.overflow = "hidden"
             // Remove event listener when the component unmounts
@@ -61,16 +59,17 @@ const NavBar = () => {
         return () => {
             document.body.style.overflow = "scroll"
         };
-    }, [showProfile]) 
+    }, [showProfile])
     return (
         <>
-{/* {
-    showProfile?<>
-             <div onClick={() => { setProfile(!showProfile) }} className="absolute hidden md:block w-[100%] h-[100%] z-40 bg-slate-400 opacity-40 top-0"></div>
-             <Profile/>
-
-    </>:<></>
-} */}
+{
+    showProfile && <>
+  
+<Profile/>
+    
+    </>
+    
+}
             <div className={`py-4 flex justify-center  transition-opacity duration-200 z-50 ${location.pathname == "/user" ? "opacity-70 hover:opacity-90" : "opacity-100"}`}>
                 <div className="md:w-[90vw] w-[90vw] bg-slate-300 flex px-3 py-4 justify-between items-center rounded-lg">
                     <span className="font-semibold text-[1.2rem]">u<span className="text-[#2b757e]">JEX</span></span>
@@ -83,11 +82,11 @@ const NavBar = () => {
                             })
                         }
                         {
-                            userExs && <button onClick={() => {setProfile(true) }} className="font-semibold  ml-5 mr-5 text-slate-700" >Profile</button>
+                            userExs && <button onClick={()=>{setProfile(!showProfile)}} className="font-semibold  ml-5 mr-5 text-slate-700" >Profile</button>
 
                         }
                         {
-                            userExs && <button onClick={() => { localStorage.removeItem("id"); navigate("/signUp"); setExs(false) }} className="font-semibold ml-5 mr-5 text-slate-700" >Logout</button>
+                            userExs && <button  onClick={() => { localStorage.removeItem("id"); navigate("/signUp"); setExs(false) }} className="font-semibold ml-5 mr-5 text-slate-700" >Logout</button>
 
                         }
                     </div>
@@ -95,7 +94,7 @@ const NavBar = () => {
                 </div>
             </div>
             {
-                showNavigationPanel && <div onClick={() => { setPanel(!showNavigationPanel);setProfile(false) }} className="absolute w-[100%] h-[100%] z-30 opacity-55 bg-slate-400 top-0"></div>
+                showNavigationPanel && <div onClick={() => { setPanel(!showNavigationPanel); setProfile(false) }} className="absolute w-[100%] h-[100%] z-30 opacity-55 bg-slate-400 top-0"></div>
 
             }
             <NavigationPanel showP={showProfile} setP={setProfile} setExs={setExs} usrExs={userExs} show={showNavigationPanel} setPanelShow={setPanel} />

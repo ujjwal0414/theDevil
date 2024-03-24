@@ -70,9 +70,8 @@ const NavigationPage = () => {
                 abortController.abort()
                 setErr("Oops ! an error occured")
             },30000)
-            let updateUserSearch=await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/insertSearch/${localStorage.getItem("id")}`,{
+            let updateUserSearch=await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/incrementSearch/${localStorage.getItem("id")}`,{
                 method:"put",
-                body:JSON.stringify(),
                 headers: { 'Content-Type': 'application/json' },
                 signal:signal
             })

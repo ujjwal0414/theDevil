@@ -139,7 +139,9 @@ const SearchPlace = ({ setPlacesMap, places }) => {
 
                 let updateUserSearch = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/insertSearch/${localStorage.getItem("id")}`, {
                     method: "put",
-                    body: JSON.stringify(coord),
+                    body: JSON.stringify({
+                        route:[placeName,p2]
+                    }),
                     headers: { 'Content-Type': 'application/json' },
                     signal: signal
                 })
