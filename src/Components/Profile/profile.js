@@ -107,7 +107,7 @@ let Profile = ({showP,setP}) => {
         <>
         <div onClick={()=>{setP(!showP)}} className="absolute w-[100%] h-[100%] bg-gray-400 opacity-40 z-50">
             </div>
-            <div className="md:w-[20vw] flex flex-col rounded-lg items-center right-6 top-10 absolute md:h-[90%] w-[90vw] h-[80vh] overflow-auto pb-2 z-50 bg-[#e9ecef]">
+            <div className="md:w-[20vw] flex flex-col rounded-lg items-center right-6 top-10 absolute md:h-[90%] w-[90vw] h-[88vh] overflow-auto pb-2 z-50 bg-[#e9ecef]">
             {
                 resp!==null?<>
                 
