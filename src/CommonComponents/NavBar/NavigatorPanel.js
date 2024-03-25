@@ -26,7 +26,7 @@ const NavigationPanel = ({ show, setPanelShow, usrExs, setExs,showP,setP }) => {
 
 
       </div>
-
+     
     }
     </>
   )

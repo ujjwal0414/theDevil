@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { LuLoader2 } from "react-icons/lu";
 import { uploadImage } from "../../fireBase/ImageUploadFunc";
+import { IoMdArrowRoundBack } from "react-icons/io";
 let Profile = ({showP,setP}) => {
     let [err,setErr]=useState("");
     let [resp,setResp]=useState(null);
@@ -106,15 +107,15 @@ let Profile = ({showP,setP}) => {
         <>
         <div onClick={()=>{setP(!showP)}} className="absolute w-[100%] h-[100%] bg-gray-400 opacity-40 z-50">
             </div>
-            <div className="md:w-[20vw] flex flex-col rounded-lg items-center right-6 top-10 absolute md:h-[90%] w-[90vw] h-[90vh] pb-2 z-50 bg-[#e9ecef]">
-
+            <div className="md:w-[20vw] flex flex-col rounded-lg items-center right-6 top-10 absolute md:h-[90%] w-[90vw] h-[90vh] overflow-auto pb-2 z-50 bg-[#e9ecef]">
             {
                 resp!==null?<>
                 
                 <div className="w-[95%] flex justify-center bg-[#f8f9fa] py-3 mt-4 rounded-md relative">
+                <span className="md:hidden absolute top-1 left-1"><IoMdArrowRoundBack onClick={()=>{setP(!showP)}}/></span>
                     <button onClick={UploadPic} className="absolute right-2 border border-slate-600 px-2 rounded-md bottom-2">Edit</button>
                     <input onChange={(e)=>{getDownLoadUrl(e.target.files[0])}}  ref={picRef} type="file" className="hidden"/>
-                    <div className="bg-cover md:w-[5vw] rounded-full overflow-hidden   md:h-[5vw]">  <img  className="w-[100%] h-[100%]" src={`${imgRef}`} alt="profilePic" />
+                    <div className="bg-cover md:w-[5vw] w-[25vw] h-[25vw] rounded-full overflow-hidden   md:h-[5vw]">  <img  className="w-[100%] h-[100%]" src={`${imgRef}`} alt="profilePic" />
 </div>
                 </div>
                 {
@@ -135,7 +136,7 @@ let Profile = ({showP,setP}) => {
                     <span className="text-[#889696] font-semibold">{resp?.srchCount}</span>
                 </div>
                 <span className="w-[95%] font-[500] text-[#495057] text-[13px] mt-2">Searched Routes</span>
-                <div className=" w-[95%]  rounded-md bg-[#f8f9fa] max-h-[25%] overflow-y-auto py-2 pl-2">
+                <div className=" w-[95%]  rounded-md bg-[#f8f9fa] md:max-h-[25%]  overflow-y-auto py-2 pl-2">
                     {
                         resp?.routes.length!==0?<>
                         {
