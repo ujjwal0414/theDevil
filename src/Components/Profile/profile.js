@@ -6,6 +6,7 @@ let Profile = ({showP,setP}) => {
     let [resp,setResp]=useState(null);
     let [loader,setLoader]=useState(false);
     let [apiNos,setNos]=useState(25);
+    let [imgRef,setimgRef]=useState("");
     let picRef=useRef(null)
     let getProfile=async()=>{
         const abortController = new AbortController();
@@ -27,7 +28,7 @@ let Profile = ({showP,setP}) => {
               console.log(userProfile);
                 setResp(userProfile)
                 setNos(userProfile.data.userSubscription)
-               
+                setimgRef(userProfile.data.userProfilePic)
             }
             else{
                 setErr("Can't fetch details")
@@ -62,6 +63,9 @@ let Profile = ({showP,setP}) => {
         setLoader(false)
       }
     }
+    let UploadPic=async()=>{
+        picRef.current.click();
+    }
     return (
         <>
         <div onClick={()=>{setP(!showP)}} className="absolute w-[100%] h-[100%] bg-gray-400 opacity-40 z-50">
@@ -72,9 +76,9 @@ let Profile = ({showP,setP}) => {
                 resp!==null?<>
                 
                 <div className="w-[95%] flex justify-center bg-[#f8f9fa] py-3 mt-4 rounded-md relative">
-                    <button className="absolute right-2 border border-slate-600 px-2 rounded-md bottom-2">Edit</button>
+                    <button onClick={UploadPic} className="absolute right-2 border border-slate-600 px-2 rounded-md bottom-2">Edit</button>
                     <input  ref={picRef} type="file" className="hidden"/>
-                    <img  className="md:w-[5vw] rounded-full md:h-[5vw]" src={`${resp?.data?.userProfilePic}`} alt="profilePic" />
+                    <img  className="md:w-[5vw] rounded-full md:h-[5vw]" src={`${imgRef}`} alt="profilePic" />
                 </div>
                 <span className="w-[95%] font-[500] text-[#495057] text-[13px] mt-2">Email </span>
                 <div className=" w-[95%] text-center rounded-md bg-[#f8f9fa] py-2">
