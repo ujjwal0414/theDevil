@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { LuLoader2 } from "react-icons/lu";
 
 let Profile = ({showP,setP}) => {
@@ -6,6 +6,7 @@ let Profile = ({showP,setP}) => {
     let [resp,setResp]=useState(null);
     let [loader,setLoader]=useState(false);
     let [apiNos,setNos]=useState(25);
+    let picRef=useRef(null)
     let getProfile=async()=>{
         const abortController = new AbortController();
         const signal = abortController.signal;
@@ -63,12 +64,16 @@ let Profile = ({showP,setP}) => {
     }
     return (
         <>
-            {
-                resp!==null?<>
-                <div onClick={()=>{setP(!showP)}} className="absolute w-[100%] h-[100%] bg-gray-400 opacity-40 z-50">
+        <div onClick={()=>{setP(!showP)}} className="absolute w-[100%] h-[100%] bg-gray-400 opacity-40 z-50">
             </div>
             <div className="md:w-[20vw] flex flex-col rounded-lg items-center right-6 top-10 absolute md:h-[90%] w-[90vw] h-[90vh] pb-2 z-50 bg-[#e9ecef]">
-                <div className="w-[95%] flex justify-center bg-[#f8f9fa] py-3 mt-4 rounded-md">
+
+            {
+                resp!==null?<>
+                
+                <div className="w-[95%] flex justify-center bg-[#f8f9fa] py-3 mt-4 rounded-md relative">
+                    <button className="absolute right-2 border border-slate-600 px-2 rounded-md bottom-2">Edit</button>
+                    <input  ref={picRef} type="file" className="hidden"/>
                     <img  className="md:w-[5vw] rounded-full md:h-[5vw]" src={`${resp?.data?.userProfilePic}`} alt="profilePic" />
                 </div>
                 <span className="w-[95%] font-[500] text-[#495057] text-[13px] mt-2">Email </span>
@@ -134,14 +139,13 @@ let Profile = ({showP,setP}) => {
                 </div>
                 {
                     err && <span className="w-[95%] mt-5 font-semibold rounded-md text-[14px] bg-[#f8f9fa] py-2 text-[#495057] pl-2">Unable to update subscription</span>
-
                 }
-            </div>
-                
-                </>:<><span className="mt-4 w-[95%] py-2 font-semibold rounded-md">
-                {err}
-                    </span></>
+            
+                </>:<><span className="mt-5 w-[95%] text-center bg-[#f8f9fa] text-[#495057]  py-2 font-semibold rounded-md">
+                {err?err:"Loading"}
+                 </span></>
             }
+            </div>
         </>
     )
 }
