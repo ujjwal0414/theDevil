@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import { LuLoader2 } from "react-icons/lu";
-
+import { uploadImage } from "../../fireBase/ImageUploadFunc";
 let Profile = ({showP,setP}) => {
     let [err,setErr]=useState("");
     let [resp,setResp]=useState(null);
     let [loader,setLoader]=useState(false);
     let [apiNos,setNos]=useState(25);
     let [imgRef,setimgRef]=useState("");
+    let [imgErr,setImgErr]=useState("")
     let picRef=useRef(null)
     let getProfile=async()=>{
         const abortController = new AbortController();
@@ -66,6 +67,41 @@ let Profile = ({showP,setP}) => {
     let UploadPic=async()=>{
         picRef.current.click();
     }
+    let UpdatePic=async(url)=>{
+      try {
+        let picResponse=await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/updatePic/${localStorage.getItem("id")}`,{
+            method:"put",
+            body:JSON.stringify({
+                url:url
+            }),
+            headers:{"Content-Type":"application/json"},
+        })
+        picResponse=await picResponse.json();
+        console.log(picResponse);
+        setimgRef(url)
+        setImgErr("Updated")
+        setTimeout(()=>{
+           setImgErr("")
+        },2000)
+      } catch (error) {
+        setImgErr("Failed updating image")
+        console.log(error);
+      }
+    }
+    let getDownLoadUrl=(file)=>{
+        setImgErr("Updating...")
+        uploadImage(file)
+        .then((downloadURL) => {
+            //console.log('Download URL:', downloadURL);
+            UpdatePic(downloadURL)
+            setImgErr("Updating...")
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            setImgErr("Failed updating image")
+            // Handle errors if any
+        });
+    }
     return (
         <>
         <div onClick={()=>{setP(!showP)}} className="absolute w-[100%] h-[100%] bg-gray-400 opacity-40 z-50">
@@ -77,9 +113,15 @@ let Profile = ({showP,setP}) => {
                 
                 <div className="w-[95%] flex justify-center bg-[#f8f9fa] py-3 mt-4 rounded-md relative">
                     <button onClick={UploadPic} className="absolute right-2 border border-slate-600 px-2 rounded-md bottom-2">Edit</button>
-                    <input  ref={picRef} type="file" className="hidden"/>
-                    <img  className="md:w-[5vw] rounded-full md:h-[5vw]" src={`${imgRef}`} alt="profilePic" />
+                    <input onChange={(e)=>{getDownLoadUrl(e.target.files[0])}}  ref={picRef} type="file" className="hidden"/>
+                    <div className="bg-cover md:w-[5vw] rounded-full overflow-hidden   md:h-[5vw]">  <img  className="w-[100%] h-[100%]" src={`${imgRef}`} alt="profilePic" />
+</div>
                 </div>
+                {
+                   imgErr &&  <span className="mt-1 w-[95%] text-center bg-[#f8f9fa] text-[#495057]  py-1 font-semibold rounded-md">
+                   {imgErr?imgErr:""}
+                    </span>
+                }
                 <span className="w-[95%] font-[500] text-[#495057] text-[13px] mt-2">Email </span>
                 <div className=" w-[95%] text-center rounded-md bg-[#f8f9fa] py-2">
                     <span> </span><span className="text-[#889696] font-semibold"> {resp?.data?.email}</span>
@@ -105,7 +147,7 @@ let Profile = ({showP,setP}) => {
                         })
                     }
                         </>:<>
-                        <div  className="mt-2 mb-1 text-center"><span className="p-1 rounded-lg bg-[#e9ecef] px-2 ml-3 font-semibold">No previous results found</span></div>
+                        <div  className="mt-2 mb-1 text-center"><span className="p-1 rounded-lg  px-2 ml-3 font-semibold">No results found</span></div>
 
                         </>
                     }
