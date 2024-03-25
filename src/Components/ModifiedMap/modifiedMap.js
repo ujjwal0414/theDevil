@@ -6,10 +6,7 @@ import "@maptiler/geocoding-control/style.css";
 import { ChangeMapStyle } from './changeMapstyle';
 const MMap=({places})=>{
   let [initStyle,setStyle]=useState(maptilersdk.MapStyle.STREETS)
-  let mapStyle=[{
-    val:"Hybrid",
-    styleMap:maptilersdk.MapStyle.HYBRID
-  },
+  let mapStyle=[
   {
     val:"Street",
     styleMap:maptilersdk.MapStyle.STREETS

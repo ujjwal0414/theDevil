@@ -27,7 +27,7 @@ let Profile = ({showP,setP}) => {
             userProfile=await userProfile.json();
             if(userProfile){
                 clearTimeout(cancelApi)
-              console.log(userProfile);
+            
                 setResp(userProfile)
                 setNos(userProfile.data.userSubscription)
                 setimgRef(userProfile.data.userProfilePic)
