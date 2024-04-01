@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { setToLocalStorage } from "../../CommonComponents/localStorageSet";
 import { auth,googleAuthProvide } from "../../fireBase/fireBaseAuth";
 import {signInWithPopup,signOut} from "firebase/auth"
+// import {undraw_location_search_re_ttoj} from "../../assets/undraw_location_search_re_ttoj.svg"
 const Login = () => {
     let url=process.env.REACT_APP_BACKEND_URL
     
