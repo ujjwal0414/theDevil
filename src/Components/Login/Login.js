@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { setToLocalStorage } from "../../CommonComponents/localStorageSet";
 import { auth,googleAuthProvide } from "../../fireBase/fireBaseAuth";
 import {signInWithPopup,signOut} from "firebase/auth"
-// import {undraw_location_search_re_ttoj} from "../../assets/undraw_location_search_re_ttoj.svg"
+import LocSrch from "../../Icons/LocSrch.svg"
 const Login = () => {
     let url=process.env.REACT_APP_BACKEND_URL
     
@@ -210,8 +210,9 @@ const Login = () => {
                     </div>
                 </div>
                 <div className="md:w-[40vw] hidden md:block  w-[100vw] sm:flex justify-center h-[45vh] md:min-h-[25vw]">
-                  <img src="https://assets-global.website-files.com/5e832e12eb7ca02ee9064d42/64d4e4f4803795aef34e644d_maps_img-5.png" className="md:w-[40vw] w-[80vw]  md:h-[25vw]"/> 
-                
+                  {/* <img src="https://assets-global.website-files.com/5e832e12eb7ca02ee9064d42/64d4e4f4803795aef34e644d_maps_img-5.png" className="md:w-[40vw] w-[80vw]  md:h-[25vw]"/>  */}
+                   <img src={`${LocSrch}`} className="md:w-[40vw] w-[80vw]  md:h-[25vw]"/> 
+
                 </div>
             </div>
           <Footer/>
