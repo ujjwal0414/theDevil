@@ -123,11 +123,12 @@ const Login = () => {
         try {
             let cancelApi=setTimeout(()=>{
                 abortController.abort();
-                setError("Session timed out Try again")
+                setError("Try again")
                 
             },30000)
             let resp=await signInWithPopup(auth,googleAuthProvide)
             let {_tokenResponse}=resp;
+            
             let {localId,photoUrl,email}=_tokenResponse;
             let checkUser=await fetch(`${url}/user/userLoginViaGoogle`,{
                 method:"post",
