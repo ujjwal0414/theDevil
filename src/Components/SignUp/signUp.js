@@ -155,10 +155,11 @@ let SignUp=()=>{
             let cancelApi=setTimeout(()=>{
                 setGLoader(false)
                 abortController.abort();
-                setError("Session timed out Try again")
+                setError("Unable to process request")
                 
-            },15000)
+            },35000)
             let resp=await signInWithPopup(auth,googleAuthProvide)
+           
             let {_tokenResponse}=resp;
            
             let {photoUrl,email,localId}=_tokenResponse;
