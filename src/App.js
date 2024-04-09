@@ -14,7 +14,19 @@ import { NavigationPage } from "./Components/NavigationPage/NavigationPage";
 function App() {
   let [user,setUser]=useState("fsd")
   let navigate=useNavigate()
+  // let CheckUser=async()=>{
+  //    if(localStorage.getItem("id")!==null || localStorage.getItem("id")!==undefined){
+  //     let User=await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/getUserDetails/${'6612d5189a1e84b52334fe77'}`);
+  //     User=await User.json()
+  //     console.log(User);
+  //    }
+  //    else{
+  //     navigate("/login")
+  //    }    
+  // }
   useEffect(()=>{
+   // CheckUser()
+    // console.log(localStorage.getItem("id"));
   navigate("/user")
 },[])
   return (
