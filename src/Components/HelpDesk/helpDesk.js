@@ -83,7 +83,7 @@ const HelpDesk=()=>{
            </div>
            <div className=" md:w-[40%]  flex flex-col items-center md:h-[60%] w-[90%] ">
             <div className="md:w-[80%] w-[100%] mt-10 md:mt-0  ">
-                <textarea onChange={(e)=>{setDesc(e.target.value)}} value={prblmDesc} name="" id="" className="w-[100%] outline-none rounded-lg px-1 py-1 md:h-[30vh] h-[20vh] border border-slate-600" placeholder="Enter your further problems"></textarea>
+                <textarea onChange={(e)=>{setDesc(e.target.value)}} value={prblmDesc} name="" id="" className="w-[100%] outline-none rounded-lg px-1 py-1 md:h-[30vh] h-[20vh] border border-slate-600" placeholder="Tell us your problems"></textarea>
                 <input value={email} onChange={(e)=>{setEmail(e.target.value)}} className="w-[100%] outline-none rounded-md p-1 py-2 border border-slate-600"  type="email" placeholder="Enter email"/>
                 {
                     err && <div className="text-sm font-semibold text-slate-600">{err}</div>
